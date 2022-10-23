@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="gettingstarted.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="dom.html"><strong aria-hidden="true">3.</strong> DOM Basics</a></li><li class="chapter-item expanded "><a href="events.html"><strong aria-hidden="true">4.</strong> Event Handling</a></li><li class="chapter-item expanded "><a href="state.html"><strong aria-hidden="true">5.</strong> Observer Pattern & State</a></li><li class="chapter-item expanded "><a href="routing.html"><strong aria-hidden="true">6.</strong> URL Routing</a></li><li class="chapter-item expanded "><a href="style.html"><strong aria-hidden="true">7.</strong> CSS & Style</a></li><li class="chapter-item expanded "><a href="faq.html"><strong aria-hidden="true">8.</strong> Frequently Asked Questions</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="gettingstarted.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="dom.html"><strong aria-hidden="true">3.</strong> DOM Basics</a></li><li class="chapter-item expanded "><a href="events.html"><strong aria-hidden="true">4.</strong> Event Handling</a></li><li class="chapter-item expanded "><a href="state.html"><strong aria-hidden="true">5.</strong> Observer Pattern & State</a></li><li class="chapter-item expanded "><a href="routing.html"><strong aria-hidden="true">6.</strong> URL Routing</a></li><li class="chapter-item expanded "><a href="integrations.html"><strong aria-hidden="true">7.</strong> Integrations</a></li><li class="chapter-item expanded "><a href="faq.html"><strong aria-hidden="true">8.</strong> Frequently Asked Questions</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -136,30 +136,29 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<h2 id="motivation"><a class="header" href="#motivation">Motivation</a></h2>
+<h2 id="why-another-web-framework"><a class="header" href="#why-another-web-framework">Why another web framework?</a></h2>
 <p>Modern websites consist of at least two <a href="https://en.wikipedia.org/wiki/Coupling_(computer_programming)">tightly
 coupled</a>
 components, one runs in the browser, the other on the server. These are
 often written in different programming languages and must communicate
 with each other over an HTTP(S) connection.</p>
-<p>Kweb's goal is to eliminate this server/browser separation so that your
-webapp's architecture is determined by the problem you're solving,
-rather than the limitations of today's tools.</p>
-<h2 id="how-does-it-work"><a class="header" href="#how-does-it-work">How does it work?</a></h2>
-<p>Kweb is a self-contained Kotlin library that can be added easily to new
-or existing projects. When Kweb receives a HTTP request it responds with
-the initial HTML page, and some JavaScript that connects back to the web
-server via a WebSocket. The page then waits and listens for instructions
-from the server, while notifying the server of relevant browser events.</p>
-<p>A common concern about this approach is that the user interface might
-feel sluggish if it is server driven. Kweb solves this problem by
+<p>Kweb's goal is to eliminate this server/browser separation so you can
+focus on building your website or user interface, not on the plumbing.</p>
+<h2 id="what-is-kweb"><a class="header" href="#what-is-kweb">What is Kweb?</a></h2>
+<p>Kweb is a remote interface to the web browser's DOM. You can create and
+manipulate DOM elements, and listen for and handle DOM events.</p>
+<p>Kweb has a state system that lets you <a href="state.html">easily</a> bind values in your realtime 
+database to DOM elements. This way, the elements are automatically updated when the
+database changes.</p>
+<p>A common concern about this approach is that the user interface might feel
+sluggish if it is server-driven. Kweb solves this problem by
 <a href="https://docs.kweb.io/en/latest/events.html#immediate-events">preloading</a>
-instructions to the browser to be executed immediately on browser events
-without a server round-trip.</p>
-<p>Kweb is built on the excellent <a href="https://ktor.io/">Ktor</a> framework, which
-handles HTTP, HTTPS, and WebSocket transport. You don't need to know
+instructions to the browser. This way, the instructions are executed
+immediately on browser events without a server round-trip.</p>
+<p>Kweb is built on the <a href="https://ktor.io/">Ktor</a> framework, which handles
+HTTP, HTTPS, and WebSocket transport. You don't need to know
 Ktor to use Kweb, but if you've already got a Ktor app you can <a href="https://github.com/kwebio/kweb-demos/blob/master/ktorFeature/src/FeatureApp.kt">embed
-Kweb as a Feature</a>.</p>
+Kweb as a feature</a>.</p>
 <h2 id="features"><a class="header" href="#features">Features</a></h2>
 <ul>
 <li>Allows the problem to determine your architecture, not the
@@ -188,31 +187,19 @@ communication</li>
 is familiarity with <a href="https://gradle.org/">Gradle</a>. You should also have
 some familiarity with HTML.</p>
 <h2 id="adding-kweb-to-your-gradle-project"><a class="header" href="#adding-kweb-to-your-gradle-project">Adding Kweb to your Gradle project</a></h2>
-<p>Add these to your repositories and dependencies in your <code>build.gradle</code> or <code>build.gradle.kt</code> files.</p>
-<h3 id="gradle"><a class="header" href="#gradle">Gradle</a></h3>
-<h4 id="groovy"><a class="header" href="#groovy">Groovy</a></h4>
-<pre><code class="language-kotlin">repositories {
-    mavenCentral()
-    maven { url &quot;https://jitpack.io&quot; }
-}
-</code></pre>
+<p>Add these to your dependencies in your <code>build.gradle</code> or <code>build.gradle.kt</code> files, ensure <code>mavenCentral()</code> 
+is added to your <code>repositories</code> block.</p>
+<h3 id="groovy"><a class="header" href="#groovy">Groovy</a></h3>
 <pre><code class="language-kotlin">dependencies {
-  implementation 'com.github.kwebio:kweb-core:1.0.0-rc.1'
+  implementation 'io.kweb:kweb-core:1.0.0-rc.1'
 
   // This (or another SLF4J binding) is required for Kweb to log errors
   implementation 'org.slf4j:slf4j-simple:2.0.3'
 }
 </code></pre>
-<h4 id="kotlin"><a class="header" href="#kotlin">Kotlin</a></h4>
-<pre><code class="language-kotlin">repositories {
-  mavenCentral()
-  maven {
-      url = uri(&quot;https://jitpack.io&quot;)
-  }  
-}
-</code></pre>
+<h3 id="kotlin"><a class="header" href="#kotlin">Kotlin</a></h3>
 <pre><code class="language-kotlin">dependencies {
-  implementation(&quot;com.github.kwebio:kweb-core:1.0.0-rc.1&quot;)
+  implementation(&quot;io.kweb:kweb-core:1.0.0-rc.1&quot;)
 
   // This (or another SLF4J binding) is required for Kweb to log errors
   implementation(&quot;org.slf4j:slf4j-simple:2.0.3&quot;)
@@ -732,53 +719,63 @@ more going on here than meets the eye. <code>num</code> is a <code>KVar&lt;Int&g
 can be incremented via its <code>value</code> property. This will cause the page
 URL to update, which will in-turn cause the DOM to update to reflect the
 new URL. All of this is handled for you automatically by Kweb.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="css--style"><a class="header" href="#css--style">CSS &amp; Style</a></h1>
-<p>Kweb has out-of-the-box support for the excellent <a href="https://fomantic-ui.com">Fomantic
-UI</a> framework, which helps create beautiful,
-responsive layouts using human-friendly HTML.</p>
-<h2 id="getting-started-1"><a class="header" href="#getting-started-1">Getting started</a></h2>
-<p>First tell Kweb to use the Fomantic UI plugin:</p>
-<pre><code class="language-kotlin">import kweb.plugins.fomanticUI.*
+<div style="break-before: page; page-break-before: always;"></div><h1 id="integrations"><a class="header" href="#integrations">Integrations</a></h1>
+<p>Kweb can be integrated in other frameworks like Spring Boot, and possibly others. Thanks to Ktor's <a href="https://ktor.io/docs/war.html#configure-ktor">ServletApplicationEngine</a>, one can basically run any Ktor application within a supported servlet container like Spring Boot.</p>
+<h2 id="spring-boot"><a class="header" href="#spring-boot">Spring Boot</a></h2>
+<p>To integrate Kweb into a Spring Boot Web application you need a Spring Boot project with the web starter, which can be easily obtained from <a href="https://start.spring.io/#!language=kotlin&amp;dependencies=web">Spring initializr</a>.
+Once you have a Spring Boot Web project, simply follow the <a href="https://docs.kweb.io/book/gettingstarted.html">Getting Started</a> guide to add Kweb to your project.</p>
+<p>For ease of demonstration here is all the code you need to integrate Kweb into Spring Boot:</p>
+<pre><code class="language-kotlin">package com.example.kwebspringboot
 
-fun main() {
-    Kweb(port = 16097, plugins = listOf(fomanticUIPlugin)) {
-        // ...
-    }
-}
-</code></pre>
-<p>Now the plugin will add the Fomantic CSS and JavaScript code to your
-website automatically.</p>
-<p>Let's look at one of the simple examples from the <a href="https://Fomantic-ui.com/elements/input.html">Fomantic
-UI</a> documentation:</p>
-<pre><code class="language-html">&lt;div class=&quot;ui icon input&quot;&gt;
-  &lt;input type=&quot;text&quot; placeholder=&quot;Search...&quot;&gt;
-  &lt;i class=&quot;search icon&quot;&gt;&lt;/i&gt;
-&lt;/div&gt;
-</code></pre>
-<p>This translates to the Kotlin:</p>
-<pre><code class="language-kotlin">import kweb.plugins.fomanticUI.*
-import kweb.dom.element.creation.tags.InputType.*
+import io.ktor.server.application.*
+import io.ktor.server.plugins.compression.*
+import io.ktor.server.plugins.defaultheaders.*
+import io.ktor.server.servlet.*
+import io.ktor.server.websocket.*
+import kweb.*
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+import org.springframework.boot.web.servlet.ServletComponentScan
+import java.time.Duration
+import javax.servlet.annotation.WebServlet
 
-fun main() {
-    Kweb(port = 16097, plugins = listOf(fomanticUIPlugin)4) {
-        div(fomantic.ui.icon.input).new {
-            input(type = text, placeholder = &quot;Search...&quot;)
-            i(fomantic.search.icon)
+@ServletComponentScan
+@SpringBootApplication
+class KwebSpringBootApplication {
+
+    @WebServlet(urlPatterns = [&quot;/*&quot;], asyncSupported = true)
+    class KwebServlet : ServletApplicationEngine() {
+
+        override fun init() {
+            super.init()
+
+            application.install(DefaultHeaders)
+            application.install(Compression)
+            application.install(WebSockets) {
+                pingPeriod = Duration.ofSeconds(10)
+                timeout = Duration.ofSeconds(30)
+            }
+
+            application.install(Kweb) {
+                buildPage = {
+                    doc.body {
+                        div {
+                            h1().text(&quot;Enter Your Name&quot;)
+                            val nameInput = input(type = InputType.text)
+                            br()
+                            span().text(nameInput.value.map { &quot;Hello, $it&quot; })
+                        }
+                    }
+                }
+            }
         }
     }
 }
+
+fun main(args: Array&lt;String&gt;) {
+    runApplication&lt;KwebSpringBootApplication&gt;(*args)
+}
 </code></pre>
-<p>Take a look at the <a href="https://fomantic-ui.com">Fomantic UI documentation</a>
-to see everything else it can do.</p>
-<h2 id="other-ui-frameworks"><a class="header" href="#other-ui-frameworks">Other UI Frameworks</a></h2>
-<p>Kweb is known to work well with a number of other CSS frameworks -
-particularly those that work through pure HTML, such as
-<a href="https://tailwindcss.com/">Tailwind</a>.</p>
-<h2 id="example-and-demo"><a class="header" href="#example-and-demo">Example and Demo</a></h2>
-<ul>
-<li><a href="https://github.com/freenet/freenetorg-website/">freenet.org</a>
-A Kweb website built on Google Cloud Platform with Fomantic styling.</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="frequently-asked-questions"><a class="header" href="#frequently-asked-questions">Frequently Asked Questions</a></h1>
 <h2 id="wont-kweb-be-slow-relative-to-client-side-web-frameworks"><a class="header" href="#wont-kweb-be-slow-relative-to-client-side-web-frameworks">Won't Kweb be slow relative to client-side web frameworks?</a></h2>
 <p>No, Kweb's <a href="https://docs.kweb.io/en/latest/events.html#immediate-events">immediate
